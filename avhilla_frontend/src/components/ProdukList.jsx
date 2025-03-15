@@ -1,27 +1,30 @@
-// src/components/ProdukList.jsx
-import React, { useEffect, useState } from 'react';
-
-function ProdukList() {
+ // src/components/ProdukList.jsx
+ import React, { useEffect, useState } from 'react';
+ import axios from 'axios';
+ function ProdukList() {
   const [produk, setProduk] = useState([]);
-
   useEffect(() => {
-    // Data statis sementara
-    setProduk([
-      { id: 1, nama: 'Produk A' },
-      { id: 2, nama: 'Produk B' },
-    ]);
+    axios.get('http://localhost:3001/produk')
+    .then((response) => {
+        console.log(response.data); // Debugging
+        setProduk(response.data);
+    })
+    .catch((error) => {
+        console.error('Terjadi error:', error);
+    });
   }, []);
 
   return (
     <div>
-      <h2>Daftar Produk</h2>
+      <h2>Daftar Produk (From Database)</h2>
       <ul>
         {produk.map((item) => (
-          <li key={item.id}>{item.nama}</li>
+          <li key={item.id}>
+            {item.nama} - Rp{item.harga}
+          </li>
         ))}
       </ul>
     </div>
   );
-}
-
-export default ProdukList;
+ }
+ export default ProdukList;
