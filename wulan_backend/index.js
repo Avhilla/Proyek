@@ -1,25 +1,14 @@
+// index.js
 const express = require('express');
 const cors = require('cors');
 const pool = require('./db');
-
 const app = express();
 const PORT = 3001;
 
 app.use(cors());
 app.use(express.json());
 
-// Root route
-app.get('/', (req, res) => {
-    res.send('Hello World from Express.js!');
-});
-
-// Simple POST route
-app.post('/data', (req, res) => {
-    const { nama } = req.body;
-    res.send(`Data diterima: ${nama}`);
-});
-
-// CREATE
+// Endpoint untuk menambahkan produk (CREATE)
 app.post('/produk', async (req, res) => {
     const { nama, harga } = req.body;
     try {
@@ -34,7 +23,7 @@ app.post('/produk', async (req, res) => {
     }
 });
 
-// READ
+// Endpoint untuk melihat semua produk (READ)
 app.get('/produk', async (req, res) => {
     try {
         const allProduk = await pool.query('SELECT * FROM produk');
@@ -44,8 +33,6 @@ app.get('/produk', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
-
-// Start server
 app.listen(PORT, () => {
     console.log(`Server berjalan di http://localhost:${PORT}`);
 });
