@@ -1,0 +1,237 @@
+/* Variabel untuk mode terang dan gelap */
+:root {
+    --background-light: #a084bf;
+    --text-light: #222222;
+    --background-dark: #121212;
+    --text-dark: #ffffff;
+    --bg-item-light: #ffffff;
+    --bg-item-dark: #333;
+    --bg-modal-light: #ffffff;
+    --bg-modal-dark: #645f5f;
+    --button-primary: #007bff;
+    --button-primary-hover: #0056b3;
+    --button-success: #4CAF50;
+    --button-danger: #f44336;
+}
+
+/* Mode default (light mode) */
+body {
+    background-color: var(--background-light);
+    color: var(--text-light);
+    font-family: 'Cambria', Cochin, Georgia, Times, 'Times New Roman', serif, Geneva, Tahoma, sans-serif, 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, Tahoma, Geneva, Verdana, sans-serif, 'Times New Roman', Times, serif, 'Arial Narrow', Arial, sans-serif, 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Cochin, Georgia, Times, 'Times New Roman', serif, sans-serif;
+    font-weight: 1000; /*tebal tipisnya font*/
+    transition: all 0.3s ease-in-out;
+    font-size: larger;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: url('../assets/images/bg6.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+        
+
+/* Mode gelap */
+body.dark-mode {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+    background-image: url('../assets/images/bg3.jpg'); /* Ganti dengan gambar dark mode */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Kontainer utama/kotaknya daftar produk yang besar */
+.container {
+    width: 90%;
+    max-width: 800px;
+    background: rgb(68, 95, 171);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 15px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+body.dark-mode .container {
+  width: 90%;
+  max-width: 800px;
+  background: rgb(120, 127, 149);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 15px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Form styling / kotak tambah produk yang besar*/
+.form-container {
+    background: rgb(68, 95, 171);
+    padding: 20px;
+    border-radius: 20px;
+    width: 63%;
+    text-align: center; /*posisi teks*/
+    font-size: xx-large;
+    justify-self: center; /*posisi kotak*/
+}
+
+.judul-form {
+  display: inline-block;
+  border-bottom: 2px solid white; /* Warna putih, bisa diganti */
+  padding-bottom: 5px; /* Jarak antara teks dan garis */
+  font-size: xx-large;
+}
+
+body.dark-mode .form-container {
+  background: rgb(120, 127, 149);
+  padding: 20px;
+  border-radius: 20px;
+  width: 63%;
+  text-align: center; /*posisi teks*/
+  justify-self: center; /*posisi kotak*/}
+
+/* Input styling / kotak yang nama produk&harga*/
+.input-field {
+    width: 93%;
+    padding: 20px;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #121212;
+    font-size: x-large;
+}
+
+body.dark-mode .input-field {
+    background: #443f3f;
+    color: white;
+    border: 1px solid #666;
+}
+
+/* Error text */
+.error-text {
+    color: red;
+    font-size: 14px;
+}
+
+/* Button styling */
+button {
+    background: var(--button-primary);
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+button:hover {
+    background: var(--button-primary-hover);
+}
+
+/* Tombol aksi */
+.edit-btn {
+    background-color: var(--button-success);
+    color: white;
+}
+
+.delete-btn {
+    background-color: var(--button-danger);
+    color: white;
+}
+
+/* Modal/Bagian Edit produk */
+.modal {
+    background-color: var(--bg-modal-light);
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    padding: 10px;
+    border-radius: 20px; /*lengkung kotaknya*/
+    width: 85%;
+    max-width: 500px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .modal {
+    background-color: var(--bg-modal-dark);
+}
+
+/* Daftar produk */
+.daftar-produk {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    font-size: larger;
+}
+
+.container-produk {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 700px;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .container-produk {
+    background: var(--bg-item-dark);
+}
+
+/* Kotak produk */
+.produk-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: larger;
+    align-items: center;
+    background: var(--bg-item-light);
+    color: var(--text-light);
+    padding: 20px;/*lengkung kotaknya*/
+    border-radius: 20px; /*besar kotaknya*/
+    width: 90%; /*lebar sempit kotaknya*/
+    max-width: 660px;
+    margin-bottom: 20px; /*jarak antar kotak*/
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .produk-item {
+    background: var(--bg-item-dark);
+    color: var(--text-dark);
+}
+
+.form-container { 
+  margin-top: 50px; /*jarak antara kotak tambah produk dan atasnya*/
+  margin-bottom: 50px; /* Atur jarak antara form tambah produk dan daftar produk */
+}
+
+.list-container {
+  margin-top: 50px; /* Memberikan jarak di bagian atas daftar produk */
+}
+
+.judul-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  font-weight: bold;
+  margin-bottom: 50px; /* Jarak antara teks dan garis */
+}
+
+.judul-form::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 8px;
+  background-color: rgb(155, 195, 255); /* Sesuaikan warna */
+  position: absolute;
+  bottom: -5px; /* Atur agar di bawah teks */
+  left: 0;
+}
+
+body.dark-mode .judul-form::after {
+  background-color: #dddddd; /* Warna untuk dark mode */
+}
+
