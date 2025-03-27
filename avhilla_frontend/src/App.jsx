@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import TambahProduk from "./components/TambahProduk";
 import ProdukList from "./components/ProdukList";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./assets/ProdukStyles.css";
 
 function App() {
@@ -33,10 +35,16 @@ function App() {
 
   return (
     <div className="app-container">
-      <h1>SELAMAT DATANG DI E-COMMERCE SEDERHANA</h1>
+      <h2 className="text-center fw-bold">Aplikasi E-Commerce Sederhana</h2>
+      <p className="text-center text-muted">Kelola produk dengan mudah dan cepat</p>
       <button onClick={toggleDarkMode}>
         {darkMode ? "Light Mode" : "Dark Mode"}
       </button>
+
+      <div>
+      <ToastContainer position="top-right" autoClose={3000} />
+      {/* Komponen lainnya */}
+    </div>
 
       {/* Tambah Produk */}
       <div className="tambah-produk">
@@ -48,6 +56,7 @@ function App() {
         <ProdukList products={products} deleteProduct={deleteProduct} />
       </div>
     </div>
+    
   );
 }
 

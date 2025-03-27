@@ -29,9 +29,15 @@ body {
     margin: 0;
     background: url('../assets/images/bg6.jpg') no-repeat center center fixed;
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: max-content;
+    overflow-x: hidden;
   }
         
 
+  
 /* Mode gelap */
 body.dark-mode {
     background-color: var(--background-dark);
@@ -86,7 +92,7 @@ body.dark-mode .form-container {
   padding: 20px;
   border-radius: 20px;
   width: 63%;
-  text-align: center; /*posisi teks*/
+  text-align: left; /*posisi teks*/
   justify-self: center; /*posisi kotak*/}
 
 /* Input styling / kotak yang nama produk&harga*/

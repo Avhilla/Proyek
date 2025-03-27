@@ -3,6 +3,9 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .logo {
@@ -39,4 +42,8 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.full-width-container {
+  width: 100%;
 }

@@ -95,3 +95,24 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.container {  
+  width: 100%; /* Biar lebar penuh */
+  max-width: none;
+  padding: 20px; /* Supaya tidak terlalu mepet */
+}

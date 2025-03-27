@@ -1,115 +1,144 @@
-import React, { useEffect, useState, useRef } from 'react';
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Tambahkan Bootstrap
+import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 
 function ProdukList() {
   const [produk, setProduk] = useState([]);
-  const [editData, setEditData] = useState({ id: '', nama: '', harga: '' });
+  const [editData, setEditData] = useState({ id: "", nama: "", harga: "" });
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [newProduk, setNewProduk] = useState({ nama: '', harga: '' });
+  const [newProduk, setNewProduk] = useState({ nama: "", harga: "" });
   const formRef = useRef(null);
 
+  // Fetch data produk dari backend
   useEffect(() => {
-    axios.get('http://localhost:3001/produk')
+    axios
+      .get("http://localhost:3001/produk")
       .then((response) => setProduk(response.data))
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        toast.error("Gagal memuat data produk!");
+      });
   }, []);
 
-  const handleDelete = (id) => {
-    axios.delete(`http://localhost:3001/produk/${id}`)
+  // Hapus produk dengan konfirmasi
+  const handleDelete = (id, namaProduk) => {
+    const isConfirmed = window.confirm(`Apakah Anda yakin ingin menghapus produk "${namaProduk}"?`);
+    if (!isConfirmed) return; // Jika pengguna menekan "Cancel", tidak terjadi apa-apa
+
+    axios
+      .delete(`http://localhost:3001/produk/${id}`)
       .then(() => {
         setProduk(produk.filter((p) => p.id !== id));
+        toast.success("Produk berhasil dihapus!");
       })
-      .catch(err => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        toast.error("Gagal menghapus produk!");
+      });
   };
 
+  // Edit produk
   const handleEdit = (item) => {
     setEditData(item);
     setIsEditOpen(true);
-    setTimeout(() => formRef.current.scrollIntoView({ behavior: 'smooth' }), 100);
+    setTimeout(() => formRef.current.scrollIntoView({ behavior: "smooth" }), 100);
   };
 
+  // Update produk
   const handleUpdate = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:3001/produk/${editData.id}`, editData)
+    axios
+      .put(`http://localhost:3001/produk/${editData.id}`, editData)
       .then(() => {
         setProduk(produk.map((p) => (p.id === editData.id ? editData : p)));
         setIsEditOpen(false);
+        toast.success("Produk berhasil diperbarui!");
       })
-      .catch(err => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        toast.error("Gagal memperbarui produk!");
+      });
   };
 
+  // Tambah produk
   const handleAdd = (e) => {
     e.preventDefault();
+    
+    const isConfirmed = window.confirm("Apakah Anda yakin ingin menambahkan produk ini?");
+    if (!isConfirmed) return; // Jika user memilih "Batal", tidak ada aksi
+    
     axios.post('http://localhost:3001/produk', newProduk)
       .then((response) => {
         setProduk([...produk, response.data]);
         setNewProduk({ nama: '', harga: '' });
+        alert("Produk berhasil ditambahkan!"); // Notifikasi sukses
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        alert("Gagal menambahkan produk!"); // Notifikasi gagal
+      });
   };
-
+    
   return (
     <div className="container mt-4">
-      <h2 className="text-center mb-4">DAFTAR PRODUK</h2>  
+      {/* Notifikasi Toastify */}
+      <ToastContainer />
 
-      {/* Form Tambah Produk */}
-      <form onSubmit={handleAdd} className="row mb-3">
-        <div className="col-md-4">
-          <input
-            type="text"
-            placeholder="Nama Produk"
-            value={newProduk.nama}
-            onChange={(e) => setNewProduk({ ...newProduk, nama: e.target.value })}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="col-md-3">
-          <input
-            type="number"
-            placeholder="Harga"
-            value={newProduk.harga}
-            onChange={(e) => setNewProduk({ ...newProduk, harga: e.target.value })}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="col-md-2">
-          <button type="submit" className="btn btn-primary w-100">Tambah</button>
-        </div>
-      </form>
+      {/* Card Tambah Produk */}
+      <div className="card p-4 mb-4 shadow-sm">
+        <h4 className="fw-bold">Tambah Produk</h4>
+        <form onSubmit={handleAdd}>
+          <div className="mb-2">
+            <label className="fw-bold">Nama Produk:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={newProduk.nama}
+              onChange={(e) => setNewProduk({ ...newProduk, nama: e.target.value })}
+              required
+            />
+          </div>
+          <div className="mb-2">
+            <label className="fw-bold">Harga:</label>
+            <input
+              type="number"
+              className="form-control"
+              value={newProduk.harga}
+              onChange={(e) => setNewProduk({ ...newProduk, harga: e.target.value })}
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">Simpan</button>
+        </form>
+      </div>
 
-      {/* Tabel Daftar Produk */}
-      <table className="table table-bordered text-center">
-        <thead className="table-dark">
-          <tr>
-            <th>Nama Produk</th>
-            <th>Harga</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {produk.map((item) => (
-            <tr key={item.id}>
-              <td>{item.nama}</td>
-              <td>Rp{item.harga}</td>
-              <td>
-                <button className="btn btn-success me-2" onClick={() => handleEdit(item)}>Edit</button>
-                <button className="btn btn-danger" onClick={() => handleDelete(item.id)}>Hapus</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {/* Card Daftar Produk */}
+      <div className="card p-4 mb-4 shadow-sm">
+        <h4 className="fw-bold text-center">Daftar Produk</h4>
+        {produk.length === 0 ? (
+          <p className="text-center text-muted">Tidak ada produk.</p>
+        ) : (
+          produk.map((item) => (
+            <div key={item.id} className="card shadow-sm p-3 mb-2 d-flex flex-row justify-content-between align-items-center">
+              <span className="fw-bold">{item.nama} - Rp{item.harga}</span>
+              <div>
+                <button className="btn btn-primary btn-sm me-2" onClick={() => handleEdit(item)}>Edit</button>
+                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(item.id, item.nama)}>Delete</button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
 
-      {/* Form Edit Produk */}
+      {/* Card Form Edit Produk */}
       {isEditOpen && (
-        <div className="card p-3 mt-4" ref={formRef}>
-          <h4 className="text-center">Edit Produk</h4>
+        <div className="card p-4 mt-4 shadow-sm" ref={formRef}>
+          <h4 className="fw-bold text-center">Edit Produk</h4>
           <form onSubmit={handleUpdate}>
             <div className="mb-3">
-              <label className="form-label">Nama Produk:</label>
+              <label className="fw-bold">Nama Produk:</label>
               <input
                 type="text"
                 value={editData.nama}
@@ -119,7 +148,7 @@ function ProdukList() {
               />
             </div>
             <div className="mb-3">
-              <label className="form-label">Harga:</label>
+              <label className="fw-bold">Harga:</label>
               <input
                 type="number"
                 value={editData.harga}
