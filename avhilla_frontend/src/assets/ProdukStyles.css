@@ -139,23 +139,74 @@ button:hover {
     color: white;
 }
 
-/* Modal/Bagian Edit produk */
-.modal {
-    background-color: var(--bg-modal-light);
-    display: inline-block;
-    position: relative;
-    text-align: center;
-    padding: 10px;
-    border-radius: 20px; /*lengkung kotaknya*/
+/* Styling Edit Produk di Bawah */
+.edit-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 20px;
     width: 85%;
-    max-width: 500px;
-    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
-}
-
-body.dark-mode .modal {
-    background-color: var(--bg-modal-dark);
-}
-
+    margin-top:60px;
+    margin-bottom: 50px;
+    margin-left: 30px;
+    margin-right: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .edit-title {
+    font-size: 2rem;
+    color: #121212;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .edit-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .edit-input {
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    width: 95%;
+  }
+  
+  .edit-footer {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .btn {
+    padding: 8px 15px;
+    border: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+  
 /* Daftar produk */
 .daftar-produk {
     display: flex;

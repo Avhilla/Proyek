@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TambahProduk from "./components/TambahProduk";
 import ProdukList from "./components/ProdukList";
 import "./assets/ProdukStyles.css";
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
   const addProduct = (product) => {
     setProducts([...products, product]);
@@ -17,8 +28,7 @@ function App() {
   };
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.body.classList.toggle("dark-mode");
+    setDarkMode((prevMode) => !prevMode);
   };
 
   return (
@@ -37,7 +47,6 @@ function App() {
       <div className="daftar-produk">
         <ProdukList products={products} deleteProduct={deleteProduct} />
       </div>
-
     </div>
   );
 }
